@@ -1,40 +1,27 @@
 {
-  "name": "LearnPath Dev",
-  "image": "mcr.microsoft.com/devcontainers/dotnet:9.0",
-  "features": {
-    "ghcr.io/devcontainers/features/dotnet:2": {
-      "version": "9.0"
-    },
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "20"
-    },
-    "ghcr.io/devcontainers/features/postgresql:1": {
-      "version": "16"
-    },
-    "ghcr.io/devcontainers/features/redis:1": {}
-  },
+  "name": "ZainaPlatform Dev",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:9.0-bookworm",
+  "onCreateCommand": "curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg && echo 'deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb bookworm main' | sudo tee /etc/apt/sources.list.d/redis.list && sudo apt-get update && sudo apt-get install -y redis-server postgresql postgresql-client && sudo service postgresql start && sudo -u postgres psql -c \"CREATE USER vscode WITH SUPERUSER PASSWORD 'zainarocks';\" && sudo -u postgres psql -c \"CREATE DATABASE zainaplatform OWNER vscode;\"",
+  "postCreateCommand": "dotnet tool install --global dotnet-ef && echo 'export PATH=$PATH:$HOME/.dotnet/tools' >> ~/.bashrc && echo 'ZainaPlatform dev environment ready ✓'",
   "customizations": {
     "vscode": {
       "extensions": [
         "anthropic.claude-vscode",
         "ms-dotnettools.csharp",
         "ms-dotnettools.csdevkit",
-        "ms-azuretools.vscode-docker",
         "mtxr.sqltools",
         "mtxr.sqltools-driver-pg"
       ],
       "settings": {
-        "editor.formatOnSave": true,
-        "editor.fontSize": 14,
-        "terminal.integrated.defaultProfile.linux": "bash"
+        "editor.formatOnSave": true
       }
     }
   },
-  "postCreateCommand": "dotnet tool install --global dotnet-ef && echo 'LearnPath dev environment ready ✓'",
   "forwardPorts": [5000, 5432, 6379],
   "portsAttributes": {
-    "5000": { "label": "LearnPath API" },
+    "5000": { "label": "ZainaPlatform API" },
     "5432": { "label": "PostgreSQL" },
     "6379": { "label": "Redis" }
-  }
+  },
+  "remoteUser": "vscode"
 }
