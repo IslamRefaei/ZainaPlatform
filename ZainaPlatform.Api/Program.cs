@@ -10,6 +10,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ZainaDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<FileExtractionService>();
+builder.Services.AddScoped<AiGenerationService>();
 
 var app = builder.Build();
 
@@ -21,5 +22,6 @@ if (app.Environment.IsDevelopment())
 
 app.MapGet("/health", () => "ZainaPlatform API is running ✓");
 app.MapUploadEndpoints();
+app.MapAiEndpoints();
 
 app.Run();

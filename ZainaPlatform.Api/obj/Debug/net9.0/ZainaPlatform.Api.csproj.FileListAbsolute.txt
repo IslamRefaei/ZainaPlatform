@@ -145,3 +145,4 @@
 /workspaces/ZainaPlatform/ZainaPlatform.Api/bin/Debug/net9.0/UglyToad.PdfPig.Tokens.dll
 /workspaces/ZainaPlatform/ZainaPlatform.Api/bin/Debug/net9.0/UglyToad.PdfPig.dll
 /workspaces/ZainaPlatform/ZainaPlatform.Api/bin/Debug/net9.0/System.IO.Packaging.dll
+/workspaces/ZainaPlatform/ZainaPlatform.Api/bin/Debug/net9.0/Anthropic.SDK.dll
