@@ -1,12 +1,7 @@
 {
   "name": "ZainaPlatform Dev",
   "image": "mcr.microsoft.com/devcontainers/dotnet:9.0-bookworm",
-  "features": {
-    "ghcr.io/devcontainers/features/postgresql:1": {
-      "version": "16"
-    }
-  },
-  "postCreateCommand": "dotnet tool install --global dotnet-ef && echo 'export PATH=$PATH:$HOME/.dotnet/tools' >> ~/.bashrc && psql -U postgres -c \"CREATE DATABASE zainaplatform;\" && echo 'ZainaPlatform dev environment ready ✓'",
+  "postCreateCommand": "bash .devcontainer/setup.sh",
   "customizations": {
     "vscode": {
       "extensions": [
