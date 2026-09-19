@@ -1,0 +1,6 @@
+@ZainaPlatform.Api_HostAddress = http://localhost:5108
+
+GET {{ZainaPlatform.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

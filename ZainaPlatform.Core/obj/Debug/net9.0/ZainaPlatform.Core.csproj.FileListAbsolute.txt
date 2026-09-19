@@ -1,0 +1,12 @@
+/workspaces/ZainaPlatform/ZainaPlatform.Core/bin/Debug/net9.0/ZainaPlatform.Core.deps.json
+/workspaces/ZainaPlatform/ZainaPlatform.Core/bin/Debug/net9.0/ZainaPlatform.Core.dll
+/workspaces/ZainaPlatform/ZainaPlatform.Core/bin/Debug/net9.0/ZainaPlatform.Core.pdb
+/workspaces/ZainaPlatform/ZainaPlatform.Core/obj/Debug/net9.0/ZainaPlatform.Core.GeneratedMSBuildEditorConfig.editorconfig
+/workspaces/ZainaPlatform/ZainaPlatform.Core/obj/Debug/net9.0/ZainaPlatform.Core.AssemblyInfoInputs.cache
+/workspaces/ZainaPlatform/ZainaPlatform.Core/obj/Debug/net9.0/ZainaPlatform.Core.AssemblyInfo.cs
+/workspaces/ZainaPlatform/ZainaPlatform.Core/obj/Debug/net9.0/ZainaPlatform.Core.csproj.CoreCompileInputs.cache
+/workspaces/ZainaPlatform/ZainaPlatform.Core/obj/Debug/net9.0/ZainaPlatform.Core.sourcelink.json
+/workspaces/ZainaPlatform/ZainaPlatform.Core/obj/Debug/net9.0/ZainaPlatform.Core.dll
+/workspaces/ZainaPlatform/ZainaPlatform.Core/obj/Debug/net9.0/refint/ZainaPlatform.Core.dll
+/workspaces/ZainaPlatform/ZainaPlatform.Core/obj/Debug/net9.0/ZainaPlatform.Core.pdb
+/workspaces/ZainaPlatform/ZainaPlatform.Core/obj/Debug/net9.0/ref/ZainaPlatform.Core.dll
