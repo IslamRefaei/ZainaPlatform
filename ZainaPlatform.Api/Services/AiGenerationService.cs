@@ -139,4 +139,72 @@ public class AiGenerationService
         await _db.SaveChangesAsync();
         return aiContent;
     }
+
+    public async Task<ReExplanationResult> GenerateReExplanationAsync(
+    string extractedText, string wrongTopics)
+    {
+        var prompt = $"""
+        You are an educational tutor for primary school students (ages 8-12).
+        A student just took a quiz and got these questions wrong:
+        {wrongTopics}
+
+        Using the lesson material below, explain ONLY these specific concepts again
+        but using a completely different approach:
+        - Use simple real-life analogies and stories instead of definitions
+        - Use examples the student can relate to (food, games, sports, animals)
+        - Keep it short, friendly and encouraging
+        - Then generate 5 new questions targeting ONLY the wrong topics
+
+        Respond with valid JSON with these keys:
+        - explanation: a friendly re-explanation string focused on wrong topics
+        - focusAreas: array of strings listing the concepts re-explained
+        - newQuestions: array of 5 question objects with keys: questionText, questionType, options, correctAnswer, explanation, difficulty
+
+        Lesson material:
+        {extractedText}
+        """;
+
+        var response = await _client.Messages.GetClaudeMessageAsync(new MessageParameters
+        {
+            Model = "claude-sonnet-4-6",
+            MaxTokens = 2000,
+            Messages = new List<Message>
+        {
+            new Message
+            {
+                Role = RoleType.User,
+                Content = new List<ContentBase> { new TextContent { Text = prompt } }
+            }
+        }
+        });
+
+        var raw = (response.Content[0] as TextContent)!.Text;
+        var json = raw.Replace("```json", "").Replace("```", "").Trim();
+        var data = System.Text.Json.JsonDocument.Parse(json).RootElement;
+
+        var explanation = data.GetProperty("explanation").GetString() ?? "";
+        var focusAreas = data.GetProperty("focusAreas")
+            .EnumerateArray()
+            .Select(f => f.GetString() ?? "")
+            .ToList();
+
+        var newQuestions = data.GetProperty("newQuestions")
+            .EnumerateArray()
+            .Select(q => (object)new
+            {
+                QuestionText = q.GetProperty("questionText").GetString(),
+                QuestionType = q.GetProperty("questionType").GetString(),
+                Options = q.GetProperty("options").GetRawText(),
+                CorrectAnswer = q.GetProperty("correctAnswer").GetString(),
+                Explanation = q.GetProperty("explanation").GetString(),
+                Difficulty = q.GetProperty("difficulty").GetString()
+            }).ToList();
+
+        return new ReExplanationResult(explanation, focusAreas, newQuestions);
+    }
 }
+
+public record ReExplanationResult(
+    string Explanation,
+    List<string> FocusAreas,
+    List<object> NewQuestions);

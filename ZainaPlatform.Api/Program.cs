@@ -23,5 +23,7 @@ if (app.Environment.IsDevelopment())
 app.MapGet("/health", () => "ZainaPlatform API is running ✓");
 app.MapUploadEndpoints();
 app.MapAiEndpoints();
+app.MapQuizEndpoints();
+app.MapReExplainEndpoints();
 
 app.Run();
