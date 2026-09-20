@@ -22,6 +22,32 @@ namespace ZainaPlatform.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("ZainaPlatform.Core.Entities.AcademicYear", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("EndYear")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Label")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("StartYear")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AcademicYears");
+                });
+
             modelBuilder.Entity("ZainaPlatform.Core.Entities.AiContent", b =>
                 {
                     b.Property<int>("Id")
@@ -208,9 +234,42 @@ namespace ZainaPlatform.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("TermId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("TermId");
+
                     b.ToTable("Subjects");
+                });
+
+            modelBuilder.Entity("ZainaPlatform.Core.Entities.Term", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AcademicYearId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Label")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("TermNumber")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AcademicYearId");
+
+                    b.ToTable("Terms");
                 });
 
             modelBuilder.Entity("ZainaPlatform.Core.Entities.Week", b =>
@@ -289,6 +348,28 @@ namespace ZainaPlatform.Infrastructure.Migrations
                     b.Navigation("Week");
                 });
 
+            modelBuilder.Entity("ZainaPlatform.Core.Entities.Subject", b =>
+                {
+                    b.HasOne("ZainaPlatform.Core.Entities.Term", "Term")
+                        .WithMany("Subjects")
+                        .HasForeignKey("TermId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Term");
+                });
+
+            modelBuilder.Entity("ZainaPlatform.Core.Entities.Term", b =>
+                {
+                    b.HasOne("ZainaPlatform.Core.Entities.AcademicYear", "AcademicYear")
+                        .WithMany("Terms")
+                        .HasForeignKey("AcademicYearId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AcademicYear");
+                });
+
             modelBuilder.Entity("ZainaPlatform.Core.Entities.Week", b =>
                 {
                     b.HasOne("ZainaPlatform.Core.Entities.Subject", "Subject")
@@ -300,6 +381,11 @@ namespace ZainaPlatform.Infrastructure.Migrations
                     b.Navigation("Subject");
                 });
 
+            modelBuilder.Entity("ZainaPlatform.Core.Entities.AcademicYear", b =>
+                {
+                    b.Navigation("Terms");
+                });
+
             modelBuilder.Entity("ZainaPlatform.Core.Entities.AiContent", b =>
                 {
                     b.Navigation("QuizQuestions");
@@ -308,6 +394,11 @@ namespace ZainaPlatform.Infrastructure.Migrations
             modelBuilder.Entity("ZainaPlatform.Core.Entities.Subject", b =>
                 {
                     b.Navigation("Weeks");
+                });
+
+            modelBuilder.Entity("ZainaPlatform.Core.Entities.Term", b =>
+                {
+                    b.Navigation("Subjects");
                 });
 
             modelBuilder.Entity("ZainaPlatform.Core.Entities.Week", b =>

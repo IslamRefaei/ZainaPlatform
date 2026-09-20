@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ZainaPlatform.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+729a7ccb587d7f69e124c68852141be1a2f80e73")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5d06ea0a00f6a9103bee866e3af5c2d431980dd2")]
 [assembly: System.Reflection.AssemblyProductAttribute("ZainaPlatform.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ZainaPlatform.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

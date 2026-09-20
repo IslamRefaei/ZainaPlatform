@@ -7,6 +7,8 @@ public class ZainaDbContext : DbContext
 {
     public ZainaDbContext(DbContextOptions<ZainaDbContext> options) : base(options) { }
 
+    public DbSet<AcademicYear> AcademicYears => Set<AcademicYear>();
+    public DbSet<Term> Terms => Set<Term>();
     public DbSet<Subject> Subjects => Set<Subject>();
     public DbSet<Week> Weeks => Set<Week>();
     public DbSet<SourceFile> SourceFiles => Set<SourceFile>();
@@ -16,15 +18,25 @@ public class ZainaDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<AcademicYear>()
+            .HasMany(a => a.Terms)
+            .WithOne(t => t.AcademicYear)
+            .HasForeignKey(t => t.AcademicYearId);
+
+        modelBuilder.Entity<Term>()
+            .HasMany(t => t.Subjects)
+            .WithOne(s => s.Term)
+            .HasForeignKey(s => s.TermId);
+
+        modelBuilder.Entity<Subject>()
+            .HasMany(s => s.Weeks)
+            .WithOne(w => w.Subject)
+            .HasForeignKey(w => w.SubjectId);
+
         modelBuilder.Entity<Week>()
             .HasOne(w => w.AiContent)
             .WithOne(a => a.Week)
             .HasForeignKey<AiContent>(a => a.WeekId);
-
-        modelBuilder.Entity<Week>()
-            .HasOne(w => w.Subject)
-            .WithMany(s => s.Weeks)
-            .HasForeignKey(w => w.SubjectId);
 
         modelBuilder.Entity<QuizQuestion>()
             .HasOne(q => q.AiContent)
